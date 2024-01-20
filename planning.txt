@@ -1,0 +1,8 @@
+Monday:
+character: 
+    moves
+    takes damage 
+    collides with environment
+    animated
+    can attack
+
