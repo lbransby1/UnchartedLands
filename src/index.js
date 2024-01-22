@@ -1,7 +1,6 @@
-import Phaser from 'phaser';
-import logoImg from './assets/logo.png';
+import Phaser from 'phaser'
 
-class MyGame extends Phaser.Scene
+export default class MyGame extends Phaser.Scene
 {
     constructor ()
     {
@@ -10,27 +9,28 @@ class MyGame extends Phaser.Scene
 
     preload ()
     {
-        //  This is an example of a bundled image:
-        this.load.image('logo', logoImg);
-
-        //  This is an example of loading a static image from the public folder:
-        this.load.image('background', 'assets/bg.jpg');
+        this.load.image('tiles', 'assets/TileSheets/cave.png')
+        this.load.tilemapTiledJSON('tilemap', 'assets/Maps/Dungeon.json')
     }
       
     create ()
     {
-        this.add.image(400, 300, 'background');
+        this.add.image(0, 0, 'dungeon_tiles')
+        const map = this.make.tilemap({ key: 'tilemap' })
+        const tileset = map.addTilesetImage('cave', 'cave')
 
-        const logo = this.add.image(400, 150, 'logo');
-      
-        this.tweens.add({
-            targets: logo,
-            y: 450,
-            duration: 2000,
-            ease: "Power2",
-            yoyo: true,
-            loop: -1
-        });
+        // map.createStaticLayer('water', tileset)
+        // map.createStaticLayer('void', tileset)
+        // map.createStaticLayer('floor', tileset)
+        // map.createStaticLayer('walls', tileset)
+        // map.createStaticLayer('waterrocks', tileset)
+        // map.createStaticLayer('rocks', tileset)
+        // map.createStaticLayer('light', tileset)
+        // map.createStaticLayer('statues', tileset)
+        // map.createStaticLayer('holes', tileset)
+        // map.createStaticLayer('shading', tileset)
+        
+
     }
 }
 
