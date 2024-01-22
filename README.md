@@ -1,74 +1,153 @@
-# Phaser 3 Webpack Project Template
+# 🚨 NOTE 🚨
+**October 2022**
 
-A Phaser 3 project template with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 5](https://webpack.js.org/) that includes hot-reloading for development and production-ready builds.
+This template has been deprecated in favor of a more modern version using Vite. You can find it here: https://github.com/ourcade/phaser3-vite-template
 
-This has been updated for Phaser 3.60.0 version and above.
+---
 
-Loading images via JavaScript module `import` is also supported, although not recommended.
+![phaser3-parceljs-template](https://user-images.githubusercontent.com/2236153/71606463-37a0da80-2b2e-11ea-9b5f-5d26ccc84f91.png)
 
-![Screenshot](example.png)
+# Phaser 3 + Parcel Template
+> For people who want to spend time making games instead of configuring build tools.
 
-## Requirements
+![License](https://img.shields.io/badge/license-MIT-green)
 
-[Node.js](https://nodejs.org) is required to install dependencies and run scripts via `npm`.
+## Prerequisites
 
-## Available Commands
+You'll need [Node.js](https://nodejs.org/en/), [npm](https://www.npmjs.com/), and [Parcel](https://parceljs.org/) installed.
 
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install project dependencies |
-| `npm start` | Build project and open web server running project |
-| `npm run build` | Builds code bundle with production settings (minification, uglification, etc..) into the `dist` folder |
+It is highly recommended to use [Node Version Manager](https://github.com/nvm-sh/nvm) (nvm) to install Node.js and npm.
 
-## Writing Code
+For Windows users there is [Node Version Manager for Windows](https://github.com/coreybutler/nvm-windows).
 
-After cloning the repo, run `npm install` from your project directory. Then, you can start the local development server by running `npm start`.
+Install Node.js and `npm` with `nvm`:
 
-After starting the development server with `npm start`, you can edit any files in the `src` folder and webpack will automatically recompile and reload your server (available at `http://localhost:8080` by default).
+```bash
+nvm install node
 
-## Handling Assets
-
-This template provides support for both embedding images and loading them from a static folder. To embed an image, you can import it at the top of the file you are using it in:
-
-```js
-import logoImg from './assets/logo.png'
+nvm use node
 ```
 
-To load static files such as images, audio files, videos, etc place them into the `public/assets` folder. Then you can use this path in the Loader calls within Phaser:
+Replace 'node' with 'latest' for `nvm-windows`.
 
-```js
-    preload ()
-    {
-        //  This is an example of a bundled image:
-        this.load.image('logo', logoImg);
+Then install Parcel:
 
-        //  This is an example of loading a static image from the public folder:
-        this.load.image('background', 'assets/bg.jpg');
-    }
+```bash
+npm install -g parcel-bundler
 ```
 
-When you do `npm run build` it will use the copy-webpack-plugin to copy the `public/assets` folder into `dist/assets`. Remember to include this folder when you deploy your game to a server.
+## Getting Started
 
-## Customizing the Template
+Clone this repository to your local machine:
 
-### Babel
+```bash
+git clone https://github.com/ourcade/phaser3-parcel-template.git
+```
 
-You can write modern ES6+ JavaScript and Babel will transpile it to a version of JavaScript that you want your project to support. The targeted browsers are set in the `.babelrc` file and the default currently targets all browsers with total usage over "0.25%" but excludes IE11 and Opera Mini.
+This will create a folder named `phaser3-parcel-template`. You can specify a different folder name like this:
 
- ```
-"browsers": [
-  ">0.25%",
-  "not ie 11",
-  "not op_mini all"
-]
- ```
+```bash
+git clone https://github.com/ourcade/phaser3-parcel-template.git my-folder-name
+```
 
-### Webpack
+Go into your new project folder and install dependencies:
 
-If you want to customize your build, such as adding a new webpack loader or plugin (i.e. for loading CSS or fonts), you can modify the `webpack/base.js` file for cross-project changes, or you can modify and/or create new configuration files and target them in specific npm tasks inside of `package.json'.
+```bash
+cd phaser3-parcel-template # or 'my-folder-name'
+npm install
+```
 
-## Deploying Code
+Start development server:
 
-After you run the `npm run build` command, your code will be built into a single bundle located at `dist/bundle.min.js` along with any other assets you project depended. 
+```
+npm run start
+```
 
-If you put the contents of the `dist` folder in a publicly-accessible location (say something like `http://mycoolserver.com`), you should be able to open `http://mycoolserver.com/index.html` and play your game.
+To create a production build:
+
+```
+npm run build
+```
+
+Production files will be placed in the `dist` folder. Then upload those files to a web server. 🎉
+
+## Project Structure
+
+```
+    .
+    ├── dist
+    ├── node_modules
+    ├── public
+    ├── src
+    │   ├── scenes
+    │   │   ├── HelloWorldScene.js
+    │   ├── index.html
+    │   ├── main.js
+    ├── package.json
+```
+
+The contents of this template is the basic [Phaser3 getting started example](http://phaser.io/tutorials/getting-started-phaser3/part5).
+
+This template assumes you will want to organize your code into multiple files and use modern JavaScript (or TypeScript).
+
+JavaScript files are intended for the `src` folder. `main.js` is the entry point referenced by `index.html`.
+
+Other than that there is no opinion on how you should structure your project. There is a `scenes` folder in `src` where the `HelloWorldScene.js` lives but you can do whatever you want.
+
+## Static Assets
+
+Any static assets like images or audio files should be placed in the `public` folder. It'll then be served at http://localhost:8000/images/my-image.png
+
+Example `public` structure:
+
+```
+    public
+    ├── images
+    │   ├── my-image.png
+    ├── music
+    │   ├── ...
+    ├── sfx
+    │   ├── ...
+```
+
+They can then be loaded by Phaser with `this.image.load('my-image', 'images/my-image.png')`.
+
+## Class Properties Support
+
+This template includes class property support out of the box using `@babel/plugin-proposal-class-properties`.
+
+A `.babelrc` is included as well as the use of `babel-eslint` as the parser for ESLint.
+
+# ESLint
+
+This template uses a basic `eslint` set up for code linting to help you find and fix common problems in your JavaScript code.
+
+It does not aim to be opinionated.
+
+[See here for rules to turn on or off](https://eslint.org/docs/rules/).
+
+## TypeScript
+
+Check out the [phaser3-typescript-parcel-template](https://github.com/ourcade/phaser3-typescript-parcel-template) for a ready-to-use version of this template in TypeScript!
+
+## Dev Server Port
+
+You can change the dev server's port number by modifying the `start` script in `package.json`. We use Parcel's `-p` option to specify the port number.
+
+The script looks like this:
+
+```
+parcel src/index.html -p 8000
+```
+
+Change 8000 to whatever you want.
+
+## Other Notes
+
+[parcel-plugin-clean-easy](https://github.com/lifuzhao100/parcel-plugin-clean-easy) is used to ensure only the latest files are in the `dist` folder. You can modify this behavior by changing `parcelCleanPaths` in `package.json`.
+
+[parcel-plugin-static-files](https://github.com/elwin013/parcel-plugin-static-files-copy#readme) is used to copy static files from `public` into the output directory and serve it. You can add additional paths by modifying `staticFiles` in `package.json`.
+
+## License
+
+[MIT License](https://github.com/ourcade/phaser3-parcel-template/blob/master/LICENSE)
