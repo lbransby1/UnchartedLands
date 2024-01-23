@@ -37,7 +37,7 @@ var game = new Phaser.Game(config);
     function preload ()
         {
            this.load.image("tiles", "assets/cave.png")
-           this.load.tilemapTiledJSON("map", "assets/dungeon_v13.json")
+           this.load.tilemapTiledJSON("map", "assets/dungeon_B.json")
            this.load.image('player', 'assets/square.png');
         }
 
