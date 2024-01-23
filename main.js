@@ -38,7 +38,7 @@ var game = new Phaser.Game(config);
         {
            this.load.image("tiles", "assets/cave.png")
            this.load.tilemapTiledJSON("map", "assets/dungeon_B.json")
-           this.load.image('player', 'assets/square.png');
+           this.load.spritesheet('player', 'assets/MaleCharacter.png', { frameWidth: 16, frameHeight: 16 });
         }
 
     function create ()
@@ -58,24 +58,72 @@ var game = new Phaser.Game(config);
             player.setCollideWorldBounds(true);
 
             cursors = this.input.keyboard.createCursorKeys();//kb input
-        }
+
+            // Create animations for each direction
+            this.anims.create({
+              key: 'walkDown',
+              frames: this.anims.generateFrameNumbers('player', { start: 1, end: 3 }), // Use frames 1, 2, and 3 for downwards movement
+              frameRate: 1,
+              repeat: -1,
+          });
+
+          this.anims.create({
+              key: 'walkUp',
+              frames: this.anims.generateFrameNumbers('player', { start: 5, end: 7 }), // Use frames 5, 6, and 7 for upwards movement
+              frameRate: 10,
+              repeat: -1,
+          });
+
+          this.anims.create({
+              key: 'walkLeft',
+              frames: this.anims.generateFrameNumbers('player', { start: 12, end: 15 }), // Use frames 9, 10, and 11 for left movement
+              frameRate: 10,
+              repeat: -1,
+          });
+
+          this.anims.create({
+              key: 'walkRight',
+              frames: this.anims.generateFrameNumbers('player', { start: 8, end: 11 }), // Use frames 13, 14, and 15 for right movement
+              frameRate: 10,
+              repeat: -1,
+          });
+        
+}
   
   function update() {
         // Player movement
-        if (cursors.left.isDown) {
-          player.setVelocityX(-160);
-      } else if (cursors.right.isDown) {
-          player.setVelocityX(160);
-      } else {
-          player.setVelocityX(0);
+      if (cursors.left.isDown) 
+      {
+        player.setVelocityX(-160);
+        player.anims.play('walkLeft', true);
+      } 
+      else if (cursors.right.isDown) 
+      {
+        player.anims.play('walkRight', true);
+        player.setVelocityX(160);
+      } 
+      else 
+      {
+        player.setVelocityX(0);
+        player.anims.stop();
+        player.setFrame(0);
       }
   
-      if (cursors.up.isDown) {
+      if (cursors.up.isDown) 
+      {
+          player.anims.play('walkUp', true);
           player.setVelocityY(-160);
-      } else if (cursors.down.isDown) {
+      } 
+      else if (cursors.down.isDown)
+      {
+          player.anims.play('walkDown', true);
           player.setVelocityY(160);
-      } else {
+      } 
+      else 
+      {
+          player.setFrame(0); 
           player.setVelocityY(0);
+          player.anims.stop();
       }
   }
   
