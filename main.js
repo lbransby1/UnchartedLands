@@ -37,8 +37,9 @@ var game = new Phaser.Game(config);
     function preload ()
         {
            this.load.image("tiles", "assets/cave.png")
-           this.load.tilemapTiledJSON("map", "assets/dungeon_B.json")
+           this.load.tilemapTiledJSON("map", "assets/dungeon.json")
            this.load.spritesheet('player', 'assets/MaleCharacter.png', { frameWidth: 16, frameHeight: 16 });
+           this.load.scenePlugin('AnimatedTiles', 'https://raw.githubusercontent.com/nkholski/phaser-animated-tiles/master/dist/AnimatedTiles.js', 'animatedTiles', 'animatedTiles');   
         }
 
     function create ()
@@ -52,6 +53,8 @@ var game = new Phaser.Game(config);
             const water = map.createLayer("water", tileset, 0, 0)
             const statue = map.createLayer("statue", tileset, 0, 0)
             const lights = map.createLayer("lights", tileset, 0, 0)
+            const walls = map.createLayer("walls", tileset, 0, 0)
+            this.animatedTiles.init(map);
 
             // player Script
             player = this.physics.add.sprite(100, 100, 'player');
